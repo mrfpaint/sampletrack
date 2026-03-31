@@ -3465,7 +3465,7 @@ function renderAdminRequestsTable(requests) {
   const html = requests.map(req => {
     const tatStatus = getTATStatusAdmin(req);
     const tatClass = tatStatus === 'On-Time' ? 'teal' : tatStatus === 'Late' || tatStatus === 'Overdue' ? 'red' : 'amber';
-    return `<tr style="border-bottom:1px solid #e8e8e8">
+    return `<tr style="border-bottom:1px solid #e8e8e8;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''" onclick="alert('Request Details:\\n\\nID: ${req.RequestID}\\nRegion: ${req.Region}\\nSubmitter: ${req.SubmitterName}\\nDate: ${req.SubmittedDate}\\nStatus: ${req.Status}\\nApproval Hours: ${req.ApprovalTimeHours}\\nApproved By: ${req.ApprovedBy}')">
       <td style="padding:12px"><strong>${req.RequestID}</strong></td>
       <td style="padding:12px">${req.Region}</td>
       <td style="padding:12px">${req.SubmitterName}</td>
