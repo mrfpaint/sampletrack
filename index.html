@@ -1023,7 +1023,7 @@ async function signIn() {
   document.getElementById('loginBtn').disabled = true;
   try {
     // Always use popup — more reliable on GitHub Pages and avoids redirect issues
-    const resp = await msalInstance.loginPopup({ scopes: SCOPES });
+    const resp = await msalInstance.loginRedirect({ scopes: SCOPES });
     await handleAuthResponse(resp);
   } catch(e) {
     console.error('[MSAL] Sign in error:', e);
@@ -1177,7 +1177,7 @@ async function getToken(scopes) {
     console.warn('[Token] Silent acquire failed, trying popup:', e.errorCode);
     try {
       // Fallback to popup if silent fails (e.g. expired session, interaction required)
-      const resp = await msalInstance.acquireTokenPopup({ scopes });
+      const resp = await msalInstance.acquireTokenRedirect({ scopes });
       return resp.accessToken;
     } catch(e2) {
       console.error('[Token] Popup acquire also failed:', e2);
@@ -1772,7 +1772,7 @@ async function sendNotification(toEmail, subject, bodyHtml, ccEmails=[]) {
       // Silent failed — try popup
       console.warn('[Email] Silent token failed, trying popup:', tokenErr);
       try {
-        token = await msalInstance.acquireTokenPopup({ scopes: ['Mail.Send'], account: accounts[0] });
+        token = await msalInstance.acquireTokenRedirect({ scopes: ['Mail.Send'], account: accounts[0] });
       } catch(popupErr) {
         console.error('[Email] Token popup also failed:', popupErr);
         toast(`Email notification failed — Mail.Send permission may not be granted`, 'error');
